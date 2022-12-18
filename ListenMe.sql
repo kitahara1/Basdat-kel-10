@@ -1,9 +1,9 @@
 -- Buat Database
-CREATE DATABASE listenme;
+CREATE DATABASE IF NOT EXISTS listenme;
 USE listenme;
 
 -- Tabel Bundling
-CREATE TABLE Bundlings(
+CREATE TABLE IF NOT EXISTS Bundlings(
     bundling_id int(10) NOT NULL AUTO_INCREMENT,
     bundling_name varchar(255) NOT NULL,
     bundling_price bigint(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE Bundlings(
 );
 
 -- Tabel User
-CREATE TABLE Users(
+CREATE TABLE IF NOT EXISTS Users(
     user_id int(10) NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE Users(
 );
 
 -- Tabel Payment Methods
-CREATE TABLE PaymentMethods(
+CREATE TABLE IF NOT EXISTS PaymentMethods(
     payment_methods_id int(10) NOT NULL AUTO_INCREMENT,
     payment_methods_name varchar(255) NOT NULL,
     payment_methods_details varchar(255) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE PaymentMethods(
 );
 
 -- Tabel Transaction
-CREATE TABLE transactions(
+CREATE TABLE IF NOT EXISTS transactions(
     transactions_id int(10) NOT NULL AUTO_INCREMENT,
     user_id int(10) NOT NULL,
     payment_methods_id int(10) NOT NULL,
@@ -45,14 +45,14 @@ CREATE TABLE transactions(
 );
 
 -- Tabel Genre
-CREATE TABLE genres(
+CREATE TABLE IF NOT EXISTS genres(
     genre_id int(10) NOT NULL AUTO_INCREMENT,
     genre_name varchar(255) NOT NULL,
     PRIMARY KEY(genre_id)
 );
 
 -- Tabel Artist 
-CREATE TABLE artists(
+CREATE TABLE IF NOT EXISTS artists(
     artist_id int(10) NOT NULL AUTO_INCREMENT,
     artist_name varchar(255) NOT NULL,
     artist_location varchar(255) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE artists(
 );
 
 -- Tabel Album
-CREATE TABLE albums(
+CREATE TABLE IF NOT EXISTS albums(
     album_id int(10) NOT NULL AUTO_INCREMENT,
     artist_id int(10) NOT NULL,
     album_name varchar(255) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE albums(
 );
 
 -- Tabel Song 
-CREATE TABLE songs(
+CREATE TABLE IF NOT EXISTS songs(
     song_id int(10) NOT NULL AUTO_INCREMENT,
     song_title varchar(255) NOT NULL,
     album_id int(10) NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE songs(
 );
 
 -- Tabel Playlist
-CREATE TABLE playlists(
+CREATE TABLE IF NOT EXISTS playlists(
     playlist_id int(10) NOT NULL AUTO_INCREMENT,
     playlist_name varchar(255) NOT NULL,
     song_id int(10) NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE playlists(
 );
 
 -- Tabel Song Play
-CREATE TABLE songplays(
+CREATE TABLE IF NOT EXISTS songplays(
     song_play_id int(10) NOT NULL AUTO_INCREMENT,
     song_id int(10) NOT NULL,
     playlist_id int(10),
