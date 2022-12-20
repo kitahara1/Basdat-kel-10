@@ -16,30 +16,15 @@ CREATE TABLE IF NOT EXISTS employees(
     PRIMARY KEY(employee_id)
 );
 
-INSERT INTO Employee (employee_id) VALUES('0001','0002','0003','0004','0005','0006','0007','0008','0009','0010','0011');
-INSERT INTO Employee (employee_nik) VALUES('2102972','2102973','2102974','2102974','2102975','2102976','2102977','2102978','2102979','2102980','2102981','2102982');
-INSERT INTO Employee (employee_name) VALUES('Nuriansyah','Zaidan','Daffa','Dylee','Genta','Mackenzie','Michelle','Irene','Agatha','Azka','Rafi');
-INSERT INTO Employee (employee_gender) VALUES('L','L','L','L','L','W','W','W','W','L','L');
-INSERT INTO Employee (employee_birthplace) VALUES('Jakarta','Bandung','Palembang','Sydney','Osaka','Tokyo','Jakarta','Medan','Guangzhou','Bandung','Jogja');
-INSERT INTO Employee (employee_birthdate) VALUES('21-03-2002','03-04-1999','12-05-2000','16-06-2001','13-07-1998','24-08-2002','09-08-2000','01-01-2003','13-09-2001','06-10-1999','27-11-2002');
-INSERT INTO Employee (employee_address) VALUES('Jl.Semanggi no 05','Jl.Rambutan no 25C','Jl.Bali no 12A','Jl.Belitung no 08','Jl.Aceh no 41','Jl.Tamansari no 12','Jl.Prindapan no 24','Jl.Medan no 11','Jl.Soekarno','Jl.Pasturi no 33','Jl.Merdeka no 21');
-INSERT INTO Employee (employee_phonenumber) VALUES('08184451','08723456','08213675','08125643','08123864','08123556','08927575','08216535','08676356','08978565','08123434');
-INSERT INTO Employee (employee_joindate) VALUES('20-03-2021','13-04-2021','09-04-2021','27-06-2021','15-03-2021','19-01-2021','11-08-2021','23-09-2021','26-10-2021','08-03-2021','20-10-2021');
-
 -- Tabel Position
 CREATE TABLE IF NOT EXISTS positions(
     position_id int(10) NOT NULL AUTO_INCREMENT,
     position_name varchar(255) NOT NULL,
     position_level int(1) NOT NULL,
     position_parent int(10),
-    PRIMARY KEY(position_id),
-    FOREIGN KEY(position_parent) REFERENCES positions(position_id)
+    PRIMARY KEY(position_id)
 );
 
-INSERT INTO Position (position_id) VALUES('1','2','3','4','5');
-INSERT INTO Position (position_name) VALUES('Komisaris','CEO','Direktur Utama','Manager','Karyawan');
-INSERT INTO Position (position_level) VALUES('1','2','2','3','4');
-INSERT INTO Position (position_parent) VALUES('-','1','1','3','4');
 
 -- Tabel Department
 CREATE TABLE IF NOT EXISTS departments(
@@ -48,16 +33,14 @@ CREATE TABLE IF NOT EXISTS departments(
     PRIMARY KEY(department_id)
 );
 
-INSERT INTO Department (department_id) VALUES('1','2','3','4','5','6');
-INSERT INTO Department (department_name) VALUES('Keuangan','Marketing','Advertising',"Produksi",'Kepegawaian','Bagian Umum');
 
 -- Tabel Employee Position
 CREATE TABLE IF NOT EXISTS employee_position(
     employee_position_id int(10) NOT NULL AUTO_INCREMENT,
     employee_id int(10) NOT NULL,
-    department_id int(10) NOT NULL,
-    position_id int(10) NOT NULL,
-    supervisor_id int(10) NOT NULL,
+    department_id int(10),
+    position_id int(10),
+    supervisor_id int(10),
     PRIMARY KEY(employee_position_id),
     FOREIGN KEY(employee_id) REFERENCES employees(employee_id),
     FOREIGN KEY(department_id) REFERENCES departments(department_id),
@@ -65,10 +48,6 @@ CREATE TABLE IF NOT EXISTS employee_position(
     FOREIGN KEY(supervisor_id) REFERENCES employees(employee_id)
 );
 
-INSERT INTO employee_position (employee_position_id) VALUES('1','2','3','4','5','06','7','8','9','10','11');
-INSERT INTO employee_position (employee_id) VALUES('0001','0010','0007','0011','0002','0003','0004','0005','0006','0008','0008','0009');
-INSERT INTO employee_position (department_id) VALUES('-','-','-','4','5','6','3','1','2','5','3');
-INSERT INTO employee_position (position_id) VALUES('1','2','3','4','4','4','4','4','4','5','5');
 
 -- Tabel Salary Component
 CREATE TABLE IF NOT EXISTS salary_components(
@@ -78,9 +57,6 @@ CREATE TABLE IF NOT EXISTS salary_components(
     PRIMARY KEY(salary_component_id)
 );
 
-INSERT INTO salary_components (salary_component_id) VALUES('1','2','3','4','5','6','7','8');
-INSERT INTO salary_components (salary_component_name) VALUES('Gaji','Tunjangan Makan','Tunjangan Kesehatan','Tunjangan Transpotasi','Paket berlangganan ListenMe','Pajak Penghasilan','THR','Bonus');
-INSERT INTO salary_components (salary_component_type) VALUES('allowance','allowance','allowance','allowance','allowance','Deducation','allowance','allowance');
 
 -- Tabel Additional Salary
 CREATE TABLE IF NOT EXISTS additional_salaries(
@@ -94,11 +70,6 @@ CREATE TABLE IF NOT EXISTS additional_salaries(
     FOREIGN KEY(salary_component_id) REFERENCES salary_components(salary_component_id)
 );
 
-INSERT INTO additional_salaries (additional_salary_id) VALUES('1','2','3','4','5','6','7','8');
-INSERT INTO additional_salaries (employee_id) VALUES('0003','0003','0004','0004','0005','0005','0006','0006');
-INSERT INTO additional_salaries (salary_component_id) VALUES('8','7','8','7','8','7','8','7');
-INSERT INTO additional_salaries (additional_salary_period) VALUES('June 2022','May 2022','June 2022','May 2022','June 2022','May 2022','June 2022','May 2022');
-INSERT INTO additional_salaries (additional_salary_amount) VALUES('Rp.5.000.000','Rp.7.500.000','Rp.5.000.000','Rp.7.500.000','Rp.5.000.000','Rp.7.500.000','Rp.5.000.000','Rp.7.500.000');
 
 -- Tabel Salary Employee
 CREATE TABLE IF NOT EXISTS salary_employees(
@@ -111,10 +82,6 @@ CREATE TABLE IF NOT EXISTS salary_employees(
     FOREIGN KEY(salary_component_id) REFERENCES salary_components(salary_component_id)
 ); 
 
-INSERT INTO salary_employees (salary_employee_id) VALUES('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','37','38','39','40','41','42','43','44','45','46','47','48');
-INSERT INTO salary_employees (employee_id) VALUES('0002','0002','0002','0002','0002','0002','0003','0003','0003','0003','0003','0003','0004','0004','0004','0004','0004','0004','0005','0005','0005','0005','0005','0005','0006','0006','0006','0006','0006','0006','0008','0008','0008','0008','0008','0008','0009','0009','0009','0009','0009','0009','0011','0011','0011','0011','0011','0011');
-INSERT INTO salary_employees (salary_component_id) VALUES('1','2','3','4','5','6','1','2','3','4','5','6''1','2','3','4','5','6''1','2','3','4','5','6''1','2','3','4','5','6''1','2','3','4','5','6''1','2','3','4','5','6''1','2','3','4','5','6');
-INSERT INTO salary_employees (additional_salary_amount) VALUES('Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000');
 
 -- Tabel Payroll
 CREATE TABLE IF NOT EXISTS payrolls(
@@ -123,8 +90,6 @@ CREATE TABLE IF NOT EXISTS payrolls(
     PRIMARY KEY(payroll_id)
 );
 
-INSERT INTO Payroll (payroll_id) VALUES('1');
-INSERT INTO Payroll (payroll_period) VALUES('June 2022');
 
 -- Tabel Payroll Detail
 CREATE TABLE IF NOT EXISTS payroll_details(
@@ -139,8 +104,144 @@ CREATE TABLE IF NOT EXISTS payroll_details(
     FOREIGN KEY(salary_component_id) REFERENCES salary_components(salary_component_id)
 );
 
-INSERT INTO payroll_details (payroll_detail_id) VALUES('1','2','3','4','5','6','7');
-INSERT INTO payroll_details (payroll_id) VALUES('1','1','1','1','1','1','1');
-INSERT INTO payroll_details (employee_id) VALUES('0003','0003','0003','0003','0003','0003','0003');
-INSERT INTO payroll_details (salary_component_id) VALUES('1','2','3','4','5','6','8');
-INSERT INTO payroll_details (amount) VALUES('Rp.15.000.000','Rp.2.000.000','Rp.5.000.000','Rp.1.000.000','Rp.500.000','Rp.250.000','Rp.5.000.000');
+INSERT INTO Employees (employee_nik, employee_name, employee_gender, employee_birthplace, employee_birthdate, employee_address, employee_phonenumber, employee_joindate)
+    VALUES
+    ('2102972', 'Nuriansyah', 'L', 'Jakarta', '2002-03-21', 'Jl. Semanggi No. 05', '08184451', '2021-03-20'),
+    ('2102973', 'Zaidan', 'L', 'Bandung', '1999-04-03', 'Jl. Rambutan No. 25C', '08723456', '2021-04-13'),
+    ('2102974', 'Daffa', 'L', 'Palembang', '2000-05-12', 'Jl.Bali No. 12A', '08213675', '2021-04-09'),
+    ('2102975', 'Dylee', 'L', 'Sydney', '2001-06-16', 'Jl.Belitung No. 08', '08125643', '2021-06-27'),
+    ('2102976', 'Genta', 'L', 'Osaka', '1998-07-13', 'Jl.Aceh No. 41', '08123864', '2021-03-15'),
+    ('2102977', 'Mackenzie', 'W', 'Tokyo', '2002-08-24', 'Jl.Tamansari No. 12', '08123556', '2021-01-19'),
+    ('2102978', 'Michelle', 'W', 'Jakarta', '2000-08-09', 'Jl. Prindapan No. 24', '08927575', '2021-08-11'),
+    ('2102979', 'Irene', 'W', 'Medan', '2003-01-01', 'Jl. Medan No.11', '08216535', '2021-09-23'),
+    ('2102980', 'Agatha', 'W', 'Guangzhou', '2001-09-13', 'Jl. Soekarno', '08676356', '2021-10-26'),
+    ('2102981', 'Azka', 'L', 'Bandung', '1999-10-06', 'Jl. Pasturi No. 33', '08978565', '2021-03-08'),
+    ('2102982', 'Rafi', 'L', 'Jogja', '2002-11-27', 'Jl. Merdeka No. 21', '08123434', '2021-10-20')
+;
+
+INSERT INTO Positions (position_name, position_level, position_parent) 
+    VALUES
+    ('Komisaris', '1', '1'),
+    ('CEO', '2', '1'),
+    ('Direktur Utama', '2', '1'),
+    ('Manager', '3', '3'),
+    ('Karyawan', '4', '4')
+;
+
+INSERT INTO Departments (department_name) 
+    VALUES 
+    ('-'),
+    ('Keuangan'),
+    ('Marketing'),
+    ('Advertising'),
+    ('Produksi'),
+    ('Kepegawaian'),
+    ('Bagian Umum')
+;
+
+INSERT INTO employee_position (employee_id, department_id, position_id)
+    VALUES
+    ('1', '1', '1'),
+    ('10', '1', '2'),
+    ('7', '1', '3'),
+    ('11', '4', '4'),
+    ('2', '5', '4'),
+    ('3', '6', '4'),
+    ('4', '3', '4'),
+    ('5', '1', '4'),
+    ('6', '2', '4'),
+    ('8', '5', '5'),
+    ('9', '3', '5')
+;
+
+INSERT INTO salary_components (salary_component_name, salary_component_type) 
+    VALUES
+    ('Gaji', 'allowance'),
+    ('Tunjangan Makan', 'allowance'),
+    ('Tunjangan Kesehatan', 'allowance'),
+    ('Tunjangan Transpotasi', 'allowance'),
+    ('Paket berlangganan ListenMe', 'allowance'),
+    ('Pajak Penghasilan', 'Deduction'),
+    ('THR', 'allowance'),
+    ('Bonus', 'allowance')
+;
+
+INSERT INTO additional_salaries (employee_id, salary_component_id, additional_salary_period, additional_salary_amount)
+    VALUES
+    ('3', '8', '6', '5000000'),
+    ('3', '7', '5', '7500000'),
+    ('4', '8', '6', '5000000'),
+    ('4', '7', '5', '7500000'),
+    ('5', '8', '6', '5000000'),
+    ('5', '7', '5', '7500000'),
+    ('6', '8', '6', '5000000'),
+    ('6', '7', '5', '7500000')
+;
+
+INSERT INTO salary_employees (employee_id, salary_component_id, salary_employee_amount)
+    VALUES
+    ('2', '1', '15000000'),
+    ('2', '2', '2000000'),
+    ('2', '3', '5000000'),
+    ('2', '4', '1000000'),
+    ('2', '5', '500000'),
+    ('2', '6', '250000'),
+    ('3', '1', '15000000'),
+    ('3', '2', '2000000'),
+    ('3', '3', '5000000'),
+    ('3', '4', '1000000'),
+    ('3', '5', '500000'),
+    ('3', '6', '250000'),
+    ('4', '1', '15000000'),
+    ('4', '2', '2000000'),
+    ('4', '3', '5000000'),
+    ('4', '4', '1000000'),
+    ('4', '5', '500000'),
+    ('4', '6', '250000'),
+    ('5', '1', '15000000'),
+    ('5', '2', '2000000'),
+    ('5', '3', '5000000'),
+    ('5', '4', '1000000'),
+    ('5', '5', '500000'),
+    ('5', '6', '250000'),
+    ('6', '1', '15000000'),
+    ('6', '2', '2000000'),
+    ('6', '3', '5000000'),
+    ('6', '4', '1000000'),
+    ('6', '5', '500000'),
+    ('6', '6', '250000'),
+    ('8', '1', '15000000'),
+    ('8', '2', '2000000'),
+    ('8', '3', '5000000'),
+    ('8', '4', '1000000'),
+    ('8', '5', '500000'),
+    ('8', '6', '250000'),
+    ('9', '1', '15000000'),
+    ('9', '2', '2000000'),
+    ('9', '3', '5000000'),
+    ('9', '4', '1000000'),
+    ('9', '5', '500000'),
+    ('9', '6', '250000'),
+    ('11', '1', '15000000'),
+    ('11', '2', '2000000'),
+    ('11', '3', '5000000'),
+    ('11', '4', '1000000'),
+    ('11', '5', '500000'),
+    ('11', '6', '250000')
+;
+
+INSERT INTO Payrolls (payroll_period)
+    VALUES
+    ('6')
+;
+
+INSERT INTO payroll_details (payroll_id, employee_id, salary_component_id, amount)
+    VALUES
+    ('1','3','1','15000000'),
+    ('1','3','2','2000000'),
+    ('1','3','3','5000000'),
+    ('1','3','4','1000000'),
+    ('1','3','5','500000'),
+    ('1','3','6','250000'),
+    ('1','3','8','500000')
+;
