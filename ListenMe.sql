@@ -11,10 +11,6 @@ CREATE TABLE IF NOT EXISTS Bundlings(
     PRIMARY KEY (bundling_id)
 );
 
-INSERT INTO Bundling (bundling_id) VALUES ('1','2','3','4')
-INSERT INTO Bundling (bundling_name) VALUES ('Paket Harian','Paket Mingguan','Paket Bulanan','Paket Tahunan')
-INSERT INTO Bundling (bundling_price) VALUES ('Rp.2.000','Rp.7.500','Rp.45.000','Rp.250.000')
-INSERT INTO Bundling (access_level) VALUES ('1','2','3','4')
 
 -- Tabel User
 CREATE TABLE IF NOT EXISTS Users(
@@ -29,25 +25,15 @@ CREATE TABLE IF NOT EXISTS Users(
     FOREIGN KEY (bundling_id) REFERENCES Bundlings(bundling_id)
 );
 
-INSERT INTO User (user_id) VALUES ('1');
-INSERT INTO User (username) VALUES ('zeddonly');
-INSERT INTO User (password) VALUES ('aezakmi123');
-INSERT INTO User (name) VALUES ('zedd');
-INSERT INTO User (gender) VALUES ('L');
-INSERT INTO User (email) VALUES ('dunno@gmail.com');
-INSERT INTO User (bundling_id) VALUES ('1');
 
 -- Tabel Payment Methods
 CREATE TABLE IF NOT EXISTS PaymentMethods(
     payment_methods_id int(10) NOT NULL AUTO_INCREMENT,
     payment_methods_name varchar(255) NOT NULL,
-    payment_methods_details varchar(255) NOT NULL,
+    payment_methods_details varchar(255),
     PRIMARY KEY(payment_methods_id)
 );
 
-INSERT INTO PaymentMethods (payment_methods_id) VALUES ('001','002','003','004')
-INSERT INTO PaymentMethods (payment_methods_name) VALUES ('Virtual Account','Bank Transfer','E-Wallet','Debit Card')
-INSERT INTO PaymentMethods (payment_methods_details) VALUES ('')
 
 -- Tabel Transaction
 CREATE TABLE IF NOT EXISTS transactions(
@@ -61,11 +47,6 @@ CREATE TABLE IF NOT EXISTS transactions(
     FOREIGN KEY (payment_methods_id) REFERENCES PaymentMethods(payment_methods_id)
 );
 
-INSERT INTO transactions (transactions_id) VALUES ('1')
-INSERT INTO transactions (user_id) VALUES ('1')
-INSERT INTO transactions (payment_methods_id) VALUES ('001')
-INSERT INTO transactions (amount) VALUES ('Rp.250.000')
-INSERT INTO transactions (is_paid) VALUES ('1')
 
 -- Tabel Genre
 CREATE TABLE IF NOT EXISTS genres(
@@ -74,8 +55,6 @@ CREATE TABLE IF NOT EXISTS genres(
     PRIMARY KEY(genre_id)
 );
 
-INSERT INTO Genre (genre_id) VALUES ('1','2')
-INSERT INTO Genre (genre_name) VALUES ('R&B','Hip Hop')
 
 -- Tabel Artist 
 CREATE TABLE IF NOT EXISTS artists(
@@ -85,9 +64,6 @@ CREATE TABLE IF NOT EXISTS artists(
     PRIMARY KEY(artist_id)
 );
 
-INSERT INTO Artist (artist_id) VALUES ('1','2','3')
-INSERT INTO Artist (artist_name) VALUES ('Harry Styles','One Direction','DJ Snake')
-insert INTO Artist (artist_location) VALUES ('U.K','U.K','France')
 
 -- Tabel Album
 CREATE TABLE IF NOT EXISTS albums(
@@ -99,10 +75,6 @@ CREATE TABLE IF NOT EXISTS albums(
     FOREIGN KEY(artist_id) REFERENCES artists(artist_id)
 );
 
-INSERT INTO Album (album_id) VALUES ('001','002','003')
-INSERT INTO Album (album_name) VALUES ('Harrys House','Made in the A.M','Encore')
-INSERT INTO Album (artist_id) VALUES ('1','2','3')
-INSERT INTO Album (year) VALUES ('2022','2015','2016')
 
 -- Tabel Song 
 CREATE TABLE IF NOT EXISTS songs(
@@ -117,26 +89,15 @@ CREATE TABLE IF NOT EXISTS songs(
     FOREIGN KEY(genre_id) REFERENCES genres(genre_id)
 );
 
-INSERT INTO Song (song_id) VALUES ('1','2','3')
-INSERT INTO Song (song_title) VALUES ('As it was','History','Middle')
-INSERT INTO Song (album_id) VALUES ('001','002','003')
-INSERT INTO Song (genre_id) VALUES ('1','2','3')
-INSERT INTO Song (song_duration) VALUES ('2 menit','3 menit','2 menit')
 
 -- Tabel Playlist
 CREATE TABLE IF NOT EXISTS playlists(
     playlist_id int(10) NOT NULL AUTO_INCREMENT,
     playlist_name varchar(255) NOT NULL,
-    song_id int(10) NOT NULL,
     user_id int(10) NOT NULL,
     PRIMARY KEY(playlist_id),
-    FOREIGN KEY(song_id) REFERENCES songs(song_id),
     FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );
-
-INSERT INTO Playlist (playlist_id) VALUES ('01','02')
-INSERT INTO Playlist (playlist_name) VALUES ('Mood','Chill day')
-INSERT INTO Playlist (user_id) VALUES ('1','1')
 
 
 -- Tabel Song Play
@@ -151,7 +112,60 @@ CREATE TABLE IF NOT EXISTS songplays(
     FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );
 
-INSERT INTO songplays (song_play_id) VALUES ('1','2','3')
-INSERT INTO songplays (song_id) VALUES ('1','2','3')
-INSERT INTO songplays (playlist_id) VALUES ('01','02','03')
-INSERT INTO songplays (user_id) VALUES ('1','1','1')
+
+INSERT INTO Bundlings (bundling_name, bundling_price, access_level)
+    VALUES
+    ('Paket Harian', '2000', '1'),
+    ('Paket Mingguan', '7500', '2'),
+    ('Paket Bulanan', '45000', '3'),
+    ('Paket Tahunan', '250000', '4');
+
+INSERT INTO Users (username, password, name, gender, email, bundling_id)
+    VALUES
+    ('zeddonly', 'aezakmi123', 'zedd', 'L', 'dunno@gmail.com', '1');
+
+INSERT INTO PaymentMethods (payment_methods_name, payment_methods_details)
+    VALUES
+    ('Virtual Account',''),
+    ('Bank Transfer',''),
+    ('E-Wallet',''),
+    ('Debit Card','');
+
+INSERT INTO transactions (user_id, payment_methods_id, amount, is_paid)
+    VALUES
+    ('1', '1', '250000', '1');
+
+INSERT INTO Genres (genre_name)
+    VALUES
+    ('R&B'),
+    ('Hip Hop');
+
+INSERT INTO Artists (artist_name, artist_location)
+    VALUES
+    ('Harry Styles', 'U.K'),
+    ('One Direction', 'U.K'),
+    ('DJ Snake', 'France');
+
+INSERT INTO Albums (album_name, artist_id, album_year)
+    VALUES
+    ('Harrys House', '1', '2022'),
+    ('Made in the A.M', '2', '2015'),
+    ('Encore', '3', '2016');
+
+INSERT INTO Songs (song_title, album_id, genre_id, song_duration)
+    VALUES
+    ('As it was', '1', '1', '120'),
+    ('History', '2', '2', '180'),
+    ('Middle', '3', '2', '120');
+
+INSERT INTO Playlists (playlist_name, user_id)
+    VALUES
+    ('Mood', '1'),
+    ('Chill day', '1');
+
+INSERT INTO songplays (song_id, playlist_id, user_id)
+    VALUES
+    ('1','1','1'),
+    ('2', '2', '1'),
+    ('3', '1' , '1');
+
